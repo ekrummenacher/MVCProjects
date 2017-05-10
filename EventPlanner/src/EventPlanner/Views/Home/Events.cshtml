@@ -1,0 +1,29 @@
+﻿@model IEnumerable<EventPlanner.Models.Event>
+@{
+    ViewData["Title"] = "Events";
+}
+
+<h2>Events</h2>
+<a asp-action="EventType/Index" class="btn btn-default"/>Add Event Type</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EventDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventTypeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+        </tr>
+    </thead>
+</table>

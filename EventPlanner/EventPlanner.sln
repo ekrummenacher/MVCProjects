@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{26FD3694-1265-4B9D-AF27-7BB338C35DEE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5D64AE6A-A1A9-4DA4-82D1-9AFECC7F4CBF}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "EventPlanner", "src\EventPlanner\EventPlanner.xproj", "{2AF104C0-D424-401A-9555-EFD3D19B3940}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2AF104C0-D424-401A-9555-EFD3D19B3940}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AF104C0-D424-401A-9555-EFD3D19B3940}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AF104C0-D424-401A-9555-EFD3D19B3940}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AF104C0-D424-401A-9555-EFD3D19B3940}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2AF104C0-D424-401A-9555-EFD3D19B3940} = {26FD3694-1265-4B9D-AF27-7BB338C35DEE}
+	EndGlobalSection
+EndGlobal
