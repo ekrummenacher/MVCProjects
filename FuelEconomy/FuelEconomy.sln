@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{06DD0271-9898-47E3-8A74-428F53DC116C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E8A9B50C-2BD8-4C2F-BE8D-5B47FE8232BE}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FuelEconomy", "src\FuelEconomy\FuelEconomy.xproj", "{29A590C3-90FB-42EB-A333-3AFFABB52313}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29A590C3-90FB-42EB-A333-3AFFABB52313}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29A590C3-90FB-42EB-A333-3AFFABB52313}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29A590C3-90FB-42EB-A333-3AFFABB52313}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29A590C3-90FB-42EB-A333-3AFFABB52313}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{29A590C3-90FB-42EB-A333-3AFFABB52313} = {06DD0271-9898-47E3-8A74-428F53DC116C}
+	EndGlobalSection
+EndGlobal

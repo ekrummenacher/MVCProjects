@@ -1,0 +1,206 @@
+@model PaginatedList<FuelEconomy.ViewModels.VehicleViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    SelectList fylist = ViewBag.FySelectList;
+    SelectList cyclist = ViewBag.CycSelectList;
+    SelectList drivelist = ViewBag.DriveSelectList;
+    SelectList ftlist = ViewBag.FtSelectList;
+    SelectList makelist = ViewBag.MakeSelectList;
+    SelectList translist = ViewBag.TransSelectList;
+    SelectList vclist = ViewBag.VCSelectList;
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Cylinder
+            </th>
+            <th>
+                City Milage
+            </th>
+            <th>
+                Drive
+            </th>
+            <th>
+                Displacement
+            </th>
+            <th>
+                Fuel Cost
+            </th>
+            <th>
+                Fuel Type
+            </th>
+            <th>
+                Highway Milage
+            </th>
+            <th>
+                Make
+            </th>
+            <th>
+                Model
+            </th>
+            <th>
+                Transmission
+            </th>
+            <th>
+                Vehicle Class
+            </th>
+            <th>
+                Year
+            </th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>
+                <form method="post" id="cycfilter" action="@Url.Action("Index", "Vehicles")">
+                    @Html.DropDownList("cycFilter", cyclist, "All", new { @class = "form-control", @style = "width: 7rem; display:inline-block" })
+                </form>
+            </th>
+            <th>
+            </th>
+            <th>
+                <form method="post" id="drivefilter" action="@Url.Action("Index", "Vehicles")">
+                    @Html.DropDownList("driveFilter", drivelist, "All", new { @class = "form-control", @style = "width: 9rem; display:inline-block" })
+                </form>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+                <form method="post" id="ftfilter" action="@Url.Action("Index", "Vehicles")">
+                    @Html.DropDownList("ftFilter", ftlist, "All", new { @class = "form-control", @style = "width: 9rem; display:inline-block" })
+                </form>
+            </th>
+            <th>
+            </th>
+            <th>
+                <form method="post" id="makefilter" action="@Url.Action("Index", "Vehicles")">
+                    @Html.DropDownList("makeFilter", makelist, "All", new { @class = "form-control", @style = "width: 9rem; display:inline-block" })
+                </form>
+            </th>
+            <th>
+            </th>
+            <th>
+                <form method="post" id="transfilter" action="@Url.Action("Index", "Vehicles")">
+                    @Html.DropDownList("transFilter", translist, "All", new { @class = "form-control", @style = "width: 9rem; display:inline-block" })
+                </form>
+            </th>
+            <th>
+                <form method="post" id="vcfilter" action="@Url.Action("Index", "Vehicles")">
+                    @Html.DropDownList("vcFilter", vclist, "All", new { @class = "form-control", @style = "width: 9rem; display:inline-block" })
+                </form>
+            </th>
+            <th>
+                <form method="post" id="fyfilter" action="@Url.Action("Index", "Vehicles")">
+                    @Html.DropDownList("fyFilter", fylist, "All", new { @class = "form-control", @style = "width: 7rem; display:inline-block" })
+                </form>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CylindersLabel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CityMilage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DriveLabel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Displacement)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FuelCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FuelTypeLabel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HighwayMilage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MakeLabel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransmissionLabel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VehicleClassLabel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-page="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-page="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
+<span style="padding:5px">Page @(Model.PageIndex) of @(Model.TotalPages)</span>
+
+@section scripts
+{
+    <script>
+$(document).ready(function(){
+    $("#fyFilter").change(function () {
+        $("#fyfilter").submit();
+    });
+    $("#cycFilter").change(function () {
+        $("#cycfilter").submit();
+    });
+    $("#driveFilter").change(function () {
+        $("#drivefilter").submit();
+    });
+    $("#ftFilter").change(function () {
+        $("#ftfilter").submit();
+    });
+    $("#makeFilter").change(function () {
+        $("#makefilter").submit();
+    });
+    $("#transFilter").change(function () {
+        $("#transfilter").submit();
+    });
+    $("#vcFilter").change(function () {
+        $("#vcfilter").submit();
+    });
+});
+    </script>
+}
