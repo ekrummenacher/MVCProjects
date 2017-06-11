@@ -1,0 +1,122 @@
+@model AustinVenues.Models.Venue
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>Venue</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Address" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="AddressProvidedId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="AddressProvidedId" class ="form-control" asp-items="ViewBag.AddressProvidedId"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="AssetTypeId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="AssetTypeId" class ="form-control" asp-items="ViewBag.AssetTypeId"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="AssetTypeNotes" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="AssetTypeNotes" class="form-control" />
+                <span asp-validation-for="AssetTypeNotes" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Capacity" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Capacity" class="form-control" />
+                <span asp-validation-for="Capacity" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="CouncilDistrictId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="CouncilDistrictId" class ="form-control" asp-items="ViewBag.CouncilDistrictId"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DisciplineId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="DisciplineId" class ="form-control" asp-items="ViewBag.DisciplineId"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DisciplineNotesId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="DisciplineNotesId" class ="form-control" asp-items="ViewBag.DisciplineNotesId"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="LiveMusicId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="LiveMusicId" class ="form-control" asp-items="ViewBag.LiveMusicId"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Name" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="WebNotes" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="WebNotes" class="form-control" />
+                <span asp-validation-for="WebNotes" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Website" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Website" class="form-control" />
+                <span asp-validation-for="Website" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Zipcode" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Zipcode" class="form-control" />
+                <span asp-validation-for="Zipcode" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+</body>
+</html>

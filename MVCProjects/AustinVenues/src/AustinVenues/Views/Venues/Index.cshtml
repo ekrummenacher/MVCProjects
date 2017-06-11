@@ -1,0 +1,118 @@
+@model IEnumerable<AustinVenues.Models.Venue>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CouncilDistrictId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressProvidedId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AssetTypeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AssetTypeNotes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LiveMusicId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Capacity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DisciplineId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DisciplineNotesId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WebNotes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Website)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Zipcode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th></th>
+        </tr>
+        <tr>
+
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CouncilDistrict.Label)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddressProvided.Label)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AssetType.Label)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AssetTypeNotes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LiveMusic.Label)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Capacity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discipline.Label)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisciplineNotes.Label)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WebNotes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Website)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Zipcode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>
