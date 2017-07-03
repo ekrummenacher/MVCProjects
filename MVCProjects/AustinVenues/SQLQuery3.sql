@@ -1,0 +1,2 @@
+﻿DELETE FROM dbo.Venue
+WHERE Id = 1625

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AustinVenues.ViewModels;
 
 namespace AustinVenues.Data
 {
@@ -15,15 +16,15 @@ namespace AustinVenues.Data
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-            // Customize the ASP.NET Identity model and override the defaults if needed.
-            // For example, you can rename the ASP.NET Identity table names and more.
-            // Add your customizations after calling base.OnModelCreating(builder);
-        }
-
         public DbSet<Venue> Venue { get; set; }
+        public DbSet<AddressProvided> AddressProvided { get; set; }
+        public DbSet<CouncilDistrict> CouncilDistrict { get; set; }
+        public DbSet<AssetType> AssetType { get; set; }
+        public DbSet<LiveMusic> LiveMusic { get; set; }
+        public DbSet<Discipline> Discipline { get; set; }
+        public DbSet<DisciplineNotes> DisciplineNotes { get; set; }
+        public DbSet<Favorites> Favorites { get; set; }
+        public DbSet<PartialDetailsViewModel> PartialDetailsViewModel { get; set; }
     }
 }
 

@@ -76,6 +76,31 @@ namespace AustinVenues.Migrations
                     b.ToTable("DisciplineNotes");
                 });
 
+            modelBuilder.Entity("AustinVenues.Models.Favorites", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<decimal>("Amount");
+
+                    b.Property<int?>("AssetTypeId");
+
+                    b.Property<int>("StarValue");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.Property<int>("VenueId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetTypeId");
+
+                    b.HasIndex("VenueId");
+
+                    b.ToTable("Favorites");
+                });
+
             modelBuilder.Entity("AustinVenues.Models.LiveMusic", b =>
                 {
                     b.Property<int>("Id")
@@ -136,6 +161,42 @@ namespace AustinVenues.Migrations
                     b.ToTable("Venue");
                 });
 
+            modelBuilder.Entity("AustinVenues.ViewModels.PartialDetailsViewModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address");
+
+                    b.Property<string>("AssetTypeNotes");
+
+                    b.Property<string>("Capactiy");
+
+                    b.Property<int>("DisciplineNotesId");
+
+                    b.Property<string>("DisciplineNotesLabel");
+
+                    b.Property<string>("WebNotes");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DisciplineNotesId");
+
+                    b.ToTable("PartialDetailsViewModel");
+                });
+
+            modelBuilder.Entity("AustinVenues.Models.Favorites", b =>
+                {
+                    b.HasOne("AustinVenues.Models.AssetType", "AssetType")
+                        .WithMany()
+                        .HasForeignKey("AssetTypeId");
+
+                    b.HasOne("AustinVenues.Models.Venue", "Venue")
+                        .WithMany("Favorites")
+                        .HasForeignKey("VenueId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("AustinVenues.Models.Venue", b =>
                 {
                     b.HasOne("AustinVenues.Models.AddressProvided", "AddressProvided")
@@ -166,6 +227,14 @@ namespace AustinVenues.Migrations
                     b.HasOne("AustinVenues.Models.LiveMusic", "LiveMusic")
                         .WithMany("Venue")
                         .HasForeignKey("LiveMusicId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("AustinVenues.ViewModels.PartialDetailsViewModel", b =>
+                {
+                    b.HasOne("AustinVenues.Models.DisciplineNotes", "DisciplineNotes")
+                        .WithMany()
+                        .HasForeignKey("DisciplineNotesId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }

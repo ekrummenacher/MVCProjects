@@ -1,7 +1,14 @@
-@model IEnumerable<AustinVenues.Models.Venue>
+@model PaginatedList<AustinVenues.ViewModels.VenuesViewModel>
 
 @{
     ViewData["Title"] = "Index";
+    SelectList addprolist = ViewBag.AddProSelectList;
+    SelectList cdlist = ViewBag.CdSelectList;
+    SelectList lmlist = ViewBag.LmSelectList;
+    SelectList disclist = ViewBag.DiscSelectList;
+    SelectList discnotelist = ViewBag.DiscNoteSelectList;
+    SelectList astypelist = ViewBag.AsTypeSelectList;
+    SelectList ziplist = ViewBag.ZipSelectList;
 }
 
 <!DOCTYPE html>
@@ -12,107 +19,204 @@
     <title>Index</title>
 </head>
 <body>
-<p>
+<div class="container body-content">
+<p class="hidden">
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table" style="margin-top:20px;">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CouncilDistrictId)
+                Venue Type
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AddressProvidedId)
+                Live Music
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AssetTypeId)
+                Entertainment Type
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AssetTypeNotes)
+                Zipcode
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LiveMusicId)
+                Address Provided
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Capacity)
+                Website
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DisciplineId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DisciplineNotesId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WebNotes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Website)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Zipcode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
+            <th></th>
+            <th>Add to Favorites</th>
             <th></th>
         </tr>
         <tr>
-
+            <th></th>
+            <th>
+                <form method="post" id="astypefilter" action="@Url.Action("Index", "Venues")">
+                    @Html.DropDownList("astypeFilter", astypelist, "All", new { @class = "form-control", @style = "width: 7rem; display:inline-block" })
+                </form>
+            </th>
+            <th>
+                <form method="post" id="lmfilter" action="@Url.Action("Index", "Venues")">
+                    @Html.DropDownList("lmFilter", lmlist, "All", new { @class = "form-control", @style = "width: 7rem; display:inline-block" })
+                </form>
+            </th>
+            <th>
+                <form method="post" id="discfilter" action="@Url.Action("Index", "Venues")">
+                    @Html.DropDownList("discFilter", disclist, "All", new { @class = "form-control", @style = "width: 7rem; display:inline-block" })
+                </form>
+            </th>
+            <th>
+                <form method="post" id="zipfilter" action="@Url.Action("Index", "Venues")">
+                    @Html.DropDownList("zipFilter", ziplist, "All", new { @class = "form-control", @style = "width: 9rem; display:inline-block" })
+                </form>
+            </th>
+            <th>
+                <form method="post" id="addprofilter" action="@Url.Action("Index", "Venues")">
+                    @Html.DropDownList("addproFilter", addprolist, "All", new { @class = "form-control", @style = "width: 7rem; display:inline-block" })
+                </form>
+            </th>
+            <th></th>
+            <th>
+            </th>
         </tr>
     </thead>
+    @if (Model.Any())
+    {
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
-            <td>
+            <td style="width:250px;">
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CouncilDistrict.Label)
+                @Html.DisplayFor(modelItem => item.AssetTypeLabel)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AddressProvided.Label)
+                @Html.DisplayFor(modelItem => item.LiveMusicLabel)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AssetType.Label)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AssetTypeNotes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LiveMusic.Label)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Capacity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Discipline.Label)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DisciplineNotes.Label)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WebNotes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Website)
+                @Html.DisplayFor(modelItem => item.DisciplineLabel)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Zipcode)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Address)
+                @Html.DisplayFor(modelItem => item.AddressProvidedLabel)
             </td>
-            <td>
+            <td style="width: 150px;">
+                <a href="@Html.DisplayFor(modelItem => item.Website)">@Html.DisplayFor(modelItem => item.Website)</a>
+            </td>
+            <td class="pDetails" data-record-id="@item.Id">
+                <button class="btn btn-info btn-control"  onclick="">More Details</button>
+            </td>
+            <td style="width:30px;">
+            <a asp-action="AddToFavorites" asp-controller="Favorites" asp-route-id="@item.Id"><span class="glyphicon glyphicon-star" style="font-size:2rem; display:block; color:gold;"></span></a>
+            </td>
+            @*<td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+            </td>*@
         </tr>
-}
+        <tr class="parDets-row"><td colspan="8" style="display:none;" name="details" id="partialDetails-@item.Id"></td></tr>
+        }
     </tbody>
+    } else
+    {
+        <tbody>
+            <tr>No Favorite Venues Selected</tr>
+        </tbody>
+
+    }
 </table>
+
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+<div class="center-block">
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-page="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @prevDisabled">
+        Previous
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-page="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>
+    <span style="padding:5px">Page @(Model.PageIndex) of @(Model.TotalPages)</span>
+</div>
+
+@section scripts
+    {
+     <script>
+        $(document).ready(function(){
+            $("#cdFilter").change(function () {
+                $("#cdfilter").submit();
+            });
+            $("#addproFilter").change(function () {
+                $("#addprofilter").submit();
+            });
+            $("#astypeFilter").change(function () {
+                $("#astypefilter").submit();
+            });
+            $("#lmFilter").change(function () {
+                $("#lmfilter").submit();
+            });
+            $("#discFilter").change(function () {
+                $("#discfilter").submit();
+            });
+            $("#discnoteFilter").change(function () {
+                $("#discnotefilter").submit();
+            });
+            $("#zipFilter").change(function () {
+                $("#zipfilter").submit();
+            });
+        });
+
+
+         //jQuery to pull the partial details into the view
+
+        $(".pDetails").on('click', function () {
+            $(".parDets-row").show();
+            var id = ($(this).attr("data-record-id"));
+            var target = "#partialDetails-" + id;
+  
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("PartialDetails", "Venues")?id=' + id,
+            dataType: 'html',
+            success: function (data) {
+                $(target).show();
+                $(target).html(data);
+            }
+            });
+        });
+
+         $(".hideDetails").click(function () {
+             alert("Removed!");
+             $(".parDetails").remove();
+         });
+
+         $("tr").on("click", ".hideDetails", function () {
+             console.log("Remove Me!!");
+             $(".parDetails").remove();
+             $(".hideDetails").hide();
+             $(".parDets-row").hide();
+         });
+
+    </script>
+}
+
+</div>
 </body>
 </html>

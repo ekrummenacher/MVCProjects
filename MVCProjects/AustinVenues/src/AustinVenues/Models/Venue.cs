@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,6 +8,7 @@ namespace AustinVenues.Models
 {
     public class Venue
     {
+        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public int AddressProvidedId { get; set; }
@@ -28,6 +30,8 @@ namespace AustinVenues.Models
         public virtual LiveMusic LiveMusic { get; set; }
         public virtual Discipline Discipline { get; set; }
         public virtual DisciplineNotes DisciplineNotes { get; set; }
+
+        public virtual ICollection<Favorites> Favorites { get; set; }
     }
 
     public class CouncilDistrict
@@ -78,4 +82,5 @@ namespace AustinVenues.Models
 
         public virtual ICollection<Venue> Venue { get; set; }
     }
+
 }

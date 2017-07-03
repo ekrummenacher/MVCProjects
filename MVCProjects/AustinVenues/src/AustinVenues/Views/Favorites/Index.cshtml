@@ -1,0 +1,129 @@
+@model IEnumerable<AustinVenues.Models.Favorites>
+
+@{
+    ViewData["Title"] = "Favorites";
+    
+    
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+<div class="container body-content">
+<p class="hidden">
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table" style="margin-top:20px;">
+    <thead>
+        <tr>
+            <th>Venue Name</th>
+            <th>Type</th>
+            <th>Website</th>
+            <th>Address</th>
+            <th>Rank</th>
+            <th>Remove</th>
+            @if(ViewBag.Type == "favorites")
+            {
+                <th></th>
+
+            }
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    var i = item.StarValue;
+    int z;
+    int d;
+        <tr>
+            <td style="width:250px;">
+                @Html.DisplayFor(modelItem => item.Venue.Name)
+            </td>
+            <td style="width:80px;">
+                @Html.DisplayFor(modelItem => item.Venue.AssetType.Label)
+            </td>
+            <td style="width:250px">
+                <a href="@Html.DisplayFor(modelItem => item.Venue.Website)">@Html.DisplayFor(modelItem => item.Venue.Website)</a>
+            </td>
+            <td style="width:250px;">
+                @Html.DisplayFor(modelItem => item.Venue.Address)
+            </td>
+            
+            <td id="stars">
+                
+                @for(z = 1; z <=i;  z++)
+                {
+                <span class="fa fa-star" id="star-@z" name="star" value="@z" data-id="@item.Id" onclick="" style="font-size:2rem; color:gold; cursor:pointer;"></span>                    
+                }
+                @for (d=z; d <=5; d++)
+                {
+
+                 <span class="fa fa-star-o" id="star-@d" name="star" value="@d" data-id="@item.Id" onclick="" style="font-size:2rem; color:gold; cursor:pointer;"></span>
+
+                }
+                
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+    @section scripts
+    {
+        <script>
+
+            $(document).on('ready', function () {
+
+            //when star is clicked:
+                $("#stars span").on("click", function (e) {
+                    //get the value and id of clicked star
+                    var star = $(this).attr("value");
+                    var id = $(this).attr("data-id");
+                    
+                    //change the class icon
+                    if ($(this).hasClass('fa-star-o')) {
+                        $(this).removeClass("fa-star-o");
+                        $(this).addClass("fa-star");
+                        $(this).prevAll().removeClass('fa-star-o');
+                        $(this).prevAll().addClass('fa-star');
+                    } else
+                        if ($(this).hasClass('fa-star')) {
+                            //$(this).removeClass('fa-star');
+                            //$(this).addClass('fa-star-o');
+                            $(this).nextAll().removeClass("fa-star");
+                            $(this).nextAll().addClass("fa-star-o");;
+
+                        }
+                    //check to see if star value is correct
+                    console.log(star);
+
+                    //send value of star back to database
+                   $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url:'../Favorites/addstarvalue',
+                        data: {
+                            'Id': id,
+                            'StarValue': star
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            alert("success");
+                        }
+                    });
+
+                });
+            });
+
+        </script>
+    }
+</div>
+</body>
+</html>

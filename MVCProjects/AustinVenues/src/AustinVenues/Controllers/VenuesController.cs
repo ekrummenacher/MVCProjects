@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AustinVenues.Data;
 using AustinVenues.Models;
+using AustinVenues.ViewModels;
 
 namespace AustinVenues.Controllers
 {
@@ -20,10 +21,102 @@ namespace AustinVenues.Controllers
         }
 
         // GET: Venues
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page, int? cdFilter = 0, int? addproFilter = 0, int? astypeFilter = 0, int? lmFilter = 0, int? discFilter = 0, int? discnoteFilter = 0, int? zipFilter = 0)
         {
-            var venueDbContext = _context.Venue.Include(v => v.AddressProvided).Include(v => v.AssetType).Include(v => v.CouncilDistrict).Include(v => v.Discipline).Include(v => v.DisciplineNotes).Include(v => v.LiveMusic);
-            return View(await venueDbContext.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+
+            var addpro = _context.AddressProvided.Select(y => new { id = y.Id, value = y.Label }).Distinct().ToList();
+            ViewBag.AddProSelectList = new SelectList(addpro, "id", "value");
+
+            var cd = _context.CouncilDistrict.Select(y => new { id = y.Id, value = y.Label }).Distinct().ToList();
+            ViewBag.CdSelectList = new SelectList(cd, "id", "value");
+
+            var astype = _context.AssetType.Select(y => new { id = y.Id, value = y.Label }).Distinct().ToList();
+            ViewBag.AsTypeSelectList = new SelectList(astype, "id", "value");
+
+            var lm = _context.LiveMusic.Select(y => new { id = y.Id, value = y.Label }).Distinct().ToList();
+            ViewBag.LmSelectList = new SelectList(lm, "id", "value");
+
+            var disc = _context.Discipline.Select(y => new { id = y.Id, value = y.Label }).Distinct().ToList();
+            ViewBag.DiscSelectList = new SelectList(disc, "id", "value");
+
+            var discnote = _context.DisciplineNotes.Select(y => new { id = y.Id, value = y.Label }).Distinct().ToList();
+            ViewBag.DiscNoteSelectList = new SelectList(discnote, "id", "value");
+
+            var zip = _context.Venue.Select(y => new { id = y.Zipcode, value = y.Zipcode }).Distinct().ToList();
+            ViewBag.ZipSelectList = new SelectList(zip, "id", "value");
+
+
+            //Create an empty Event object
+            //IQueryable<Venue> venues;
+            IQueryable<VenuesViewModel> venuesVM;
+
+            var all_venues = _context.Venue.Select(s => new VenuesViewModel()
+            {
+                Id = s.Id,
+                Name = s.Name,
+                AssetTypeLabel = s.AssetType.Label,
+                AssetTypeId = s.AssetTypeId,
+                LiveMusicLabel = s.LiveMusic.Label,
+                LiveMusicId = s.LiveMusicId,
+                DisciplineLabel = s.Discipline.Label,
+                DisciplineId = s.DisciplineId,
+                Zipcode = s.Zipcode,
+                AddressProvidedLabel = s.AddressProvided.Label,
+                AddressProvidedId = s.AddressProvidedId,
+                Website = s.Website
+            });
+
+
+            var filter = from x in all_venues
+                         where  x.AddressProvidedId == addproFilter || x.AssetTypeId == astypeFilter || x.LiveMusicId == lmFilter || x.DisciplineId == discFilter /*|| x.DisciplineNotesId == discnoteFilter*/
+                         select x;
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+
+                zipFilter = 0;
+            }
+
+
+            if (addproFilter > 0)
+            {
+                venuesVM = all_venues.Where(s => s.AddressProvidedId == addproFilter);
+            }
+            else if (astypeFilter > 0)
+            {
+                venuesVM = all_venues.Where(s => s.AssetTypeId == astypeFilter);
+            }
+            else if (lmFilter > 0)
+            {
+                venuesVM = all_venues.Where(s => s.LiveMusicId == lmFilter);
+            }
+            else if (discFilter > 0)
+            {
+                venuesVM = all_venues.Where(s => s.DisciplineId == discFilter);
+            }
+            else if (zipFilter > 0)
+            {
+                venuesVM = all_venues.Where(s => s.Zipcode == zipFilter);
+            }
+            else
+            {
+                // do nothing, all
+                venuesVM = all_venues.Select(s => s);
+            }
+
+
+            int pageSize = 5;
+            return View(await PaginatedList<VenuesViewModel>.CreateAsync(venuesVM.AsNoTracking(), page ?? 1, pageSize));
         }
 
         // GET: Venues/Details/5
@@ -41,6 +134,25 @@ namespace AustinVenues.Controllers
             }
 
             return View(venue);
+        }
+
+        public PartialViewResult PartialDetails(int? id)
+        {
+            PartialDetailsViewModel ps = new PartialDetailsViewModel();
+            var venue_details = _context.Venue.Where(m => m.Id == id).Select(s => new PartialDetailsViewModel()
+            {
+                Id = s.Id,
+                AssetTypeNotes = s.AssetTypeNotes,
+                Capactiy = s.Capacity,
+                DisciplineNotesLabel = s.DisciplineNotes.Label,
+                WebNotes = s.WebNotes,
+                Address = s.Address,
+            });
+
+            ps = venue_details.SingleOrDefault();
+
+
+            return PartialView(ps);
         }
 
         // GET: Venues/Create

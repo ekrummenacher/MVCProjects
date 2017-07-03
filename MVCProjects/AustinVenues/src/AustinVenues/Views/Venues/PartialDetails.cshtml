@@ -1,0 +1,39 @@
+@model AustinVenues.ViewModels.PartialDetailsViewModel
+
+
+<div class="parDetails">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AssetTypeNotes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AssetTypeNotes)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Capactiy)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Capactiy)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DisciplineNotesLabel)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DisciplineNotesLabel)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WebNotes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WebNotes)
+        </dd>
+    </dl>
+    <button class="hideDetails" onclick="">Back to List</button>
+</div>
+

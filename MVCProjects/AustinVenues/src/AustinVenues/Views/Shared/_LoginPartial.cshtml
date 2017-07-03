@@ -1,8 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using AustinVenues.Models
+@using AustinVenues.Services
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject FavoritesService FavoritesCount
 
 @if (SignInManager.IsSignedIn(User))
 {
@@ -16,11 +18,17 @@
             </li>
         </ul>
     </form>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a asp-area="" asp-controller="Favorites" asp-action="Index" title="My Favorites"><span class="badge" style="font-size:1.5rem;">@FavoritesCount.GetFavoritesCount(User.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"))</span><span class="fa fa-star" style="font-size:2rem; color:gold;"></span></a></li>
+    </ul>
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
         <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
         <li><a asp-area="" asp-controller="Account" asp-action="Login">Log in</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a disabled="disabled"><span class="glyphicon glyphicon-star" style="font-size:2rem; color:yellow;"></span></a></li>
     </ul>
 }
